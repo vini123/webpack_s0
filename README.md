@@ -1,6 +1,6 @@
 # webpackstudy
 
-参照: 
+参照:   
 [https://github.com/banmunongtian/react-es6-webpack](https://github.com/banmunongtian/react-es6-webpack)
 
 [http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html)
