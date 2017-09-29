@@ -1,0 +1,29 @@
+{
+  "name": "htmlplugin",
+  "version": "1.0.0",
+  "description": "use webpack html plugin ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vini123/vuestudy.git"
+  },
+  "keywords": [
+    "webpack",
+    "html",
+    "plugin"
+  ],
+  "author": "vini123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vini123/vuestudy/issues"
+  },
+  "homepage": "https://github.com/vini123/vuestudy#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.6.0"
+  }
+}
