@@ -1,6 +1,7 @@
 # webpackstudy
 
-参照: [https://github.com/banmunongtian/react-es6-webpack](https://github.com/banmunongtian/react-es6-webpack)
+参照: 
+[https://github.com/banmunongtian/react-es6-webpack](https://github.com/banmunongtian/react-es6-webpack)
 
 [http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html)
 
@@ -26,17 +27,13 @@
 
 webpack.config.js 通常有下边四个方面，初步有个概念：  
 
-1. **entry**  
-入口文件。
+1. **entry**  入口文件。
 
-2. **output**  
-输出相关。比如路径，输出文件名。
+2. **output**  输出相关。比如路径，输出文件名。
 
-3. **loader**。  
-加载器。如 css-loader，style-loader。
+3. **loader** 加载器。如 css-loader，style-loader。
 
-4. **plugin**
-插件。
+4. **plugin** 插件。
 
 官方介绍：[https://webpack.js.org/concepts/](https://webpack.js.org/concepts/)
 
