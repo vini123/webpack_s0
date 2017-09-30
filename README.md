@@ -112,6 +112,7 @@ clean-webpack-plugin的参数：
 (Array param1, Object param2)
 
 > param1 配置需要删除的文件或目录  
+  
 > param2 配置选项。常用的有：  
 root: "/dist/" //根目录 （这里也可以是array，很灵活）   
 verbose：true, //是否写日志  
