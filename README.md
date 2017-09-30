@@ -94,3 +94,69 @@ module.exports = config;
 这里需要注意**html-webpack-plugin**的配置。 filename 输出的文件名。template 源文件，输出文件以源文件为基础添加js的。 chunks,对应入口的key。
 
 更详细，请参考：[http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html) 
+
+# 清除打包的文件
+
+如上边这样设置，每次修改文件，然后打包。**dist**文件夹下的文件就会越来越多。而那些文件又不需要这个时候可以用**clean-webpack-plugin**来删除。
+
+外来插件，都需要先下载。
+
+```
+npm install --save-dev clean-webpack-plugin
+```
+
+然后，在插件中添加设置。
+
+clean-webpack-plugin的参数：
+
+(Array param1, Object param2)
+
+> param1 配置需要删除的文件或目录
+> param2 配置选项。常用的有：  
+root: "/dist/" //根目录 （这里也可以是array，很灵活） 
+verbose：true, //是否写日志
+dry：false, // 是否真要删除
+exclude：['xx', 'xxx'] //排除不删除的目录或文件
+
+最后配置如下：
+
+```javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ClearWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+
+const config = {
+	entry: {
+    	ab:__dirname + '/src/ab.js',
+    	cd:__dirname + '/src/cd.js',
+	},
+	output:{
+    	path: path.resolve(__dirname, 'dist'),
+    	filename: '[name]-[hash].bundle.js'
+	},
+	module:{
+    	rules:[
+    		{test:/\.txt$/, use:'raw-loader'}
+    	]
+	},
+	plugins:[
+    	new HtmlWebpackPlugin({  
+                              filename:'ab.html',
+    		                      template:'./index.html',
+    		                      chunks:['ab']}),
+
+    	new HtmlWebpackPlugin({
+                          		filename:'cd.html',
+                          		template:'./index.html',
+                          		chunks:['cd']})
+	]
+}
+module.exports = config;
+
+module.exports.plugins = (module.exports.plugins || []).concat([
+		// 构建之前，先删除dist目录下面的文件夹
+		new ClearWebpackPlugin(['dist'])
+	]); 
+	
+```

@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ClearWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -29,3 +30,8 @@ const config = {
 	]
 }
 module.exports = config;
+
+module.exports.plugins = (module.exports.plugins || []).concat([
+		// 构建之前，先删除dist目录下面的文件夹
+		new ClearWebpackPlugin(['dist'])
+	]); 
