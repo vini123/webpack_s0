@@ -1,0 +1,28 @@
+html,body{
+	padding:0;
+	margin: 0;
+}
+
+span{
+	display: block;
+	width: 250px;
+	margin-top: 20px;
+	border: 1px solid #f06bd4;
+	border-radius: 4px;
+	padding: 3px 6px;
+	font-size: 13px;
+}
+
+#t1{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;	
+}
+
+#t2{
+	height: 68px;
+}
+
+#container{
+	margin:100px;
+}

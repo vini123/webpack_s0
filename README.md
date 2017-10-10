@@ -93,11 +93,11 @@ module.exports = config;
 > plugins 这个是多页面打包的关键。plugins是一个数组，可以包含很多很多插件。使用什么插件，先**install**，然后**require**进来，再**new**,配置在plugins中就可以。这里分别对两个入口文件打包，打包后的文件也分别在输出目录中。
 这里需要注意**html-webpack-plugin**的配置。 filename 输出的文件名。template 源文件，输出文件以源文件为基础添加js的。 chunks,对应入口的key。
 
-更详细，请参考：[http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html) 
+更详细，请参考：[http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html)
 
 # 清除打包的文件
 
-如上边这样设置，每次修改文件，然后打包。**dist**文件夹下的文件就会越来越多。而那些文件又不需要这个时候可以用**clean-webpack-plugin**来删除。
+如上边这样设置，每次修改文件，然后打包。**dist** 文件夹下的文件就会越来越多。而那些文件又不需要这个时候可以用 **clean-webpack-plugin** 来删除。
 
 外来插件，都需要先下载。
 
@@ -112,7 +112,7 @@ clean-webpack-plugin的参数：
 (Array param1, Object param2)
 
 > param1 配置需要删除的文件或目录  
-  
+
 > param2 配置选项。常用的有：  
 root: "/dist/" //根目录 （这里也可以是array，很灵活）   
 verbose：true, //是否写日志  
@@ -158,6 +158,259 @@ module.exports = config;
 module.exports.plugins = (module.exports.plugins || []).concat([
 		// 构建之前，先删除dist目录下面的文件夹
 		new ClearWebpackPlugin(['dist'])
-	]); 
-	
+	]);
+
 ```
+
+# 分离css，单独打包
+
+通过插件 **extract-text-webpack-plugin** 可以方便的实现css单独打包。
+> 插件官网：[https://github.com/webpack-contrib/extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin)  
+参考： [http://www.cnblogs.com/dyx-wx/p/6529447.html](http://www.cnblogs.com/dyx-wx/p/6529447.html)
+
+先编写一个简单的css样式。文件位置， `/src/style/common.css`。
+
+```css
+html,body{
+	padding:0;
+	margin: 0;
+}
+
+span{
+	display: block;
+	width: 250px;
+	margin-top: 20px;
+	border: 1px solid #f06bd4;
+	border-radius: 4px;
+	padding: 3px 6px;
+	font-size: 13px;
+}
+
+#t1{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#t2{
+	height: 68px;
+}
+
+#container{
+	margin:100px;
+}
+```
+
+安装 **extract-text-webpack-plugin** 以及 **css-loader** 和 **style-loader**
+
+```
+npm install --save-dev extract-text-webpack-plugin
+npm install --save-dev css-loader
+npm install --save-dev style-loader
+```
+
+修改 **webpack.config.js**
+
+先引入 **extract-text-webpack-plugin**
+``` javascript
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+```
+
+这里需要注意三个地方。
+1. 在output中定义输出css的路径。用 **/** 绝对路径和 **./** 相对路径。
+2. 在module中编写 **rules**。
+3. 在plugins中new插件。
+
+完整的配置如下。
+
+``` javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ClearWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+
+const config = {
+    entry: {
+        ab: __dirname + '/src/ab.js',
+        cd: __dirname + '/src/cd.js',
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name]-[hash].bundle.js',
+        publicPath: './',
+    },
+    module: {
+        rules: [
+            {test: /\.txt$/, use: 'raw-loader'},
+            {
+                test: /\.css$/, use: ExtractTextWebpackPlugin.extract({
+                fallback: 'style-loader',
+                use: 'css-loader',
+            }),
+            },
+        ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'ab.html',
+            template: './index.html',
+            chunks: ['ab'],
+        }),
+
+        new HtmlWebpackPlugin({
+            filename: 'cd.html',
+            template: './index.html',
+            chunks: ['cd'],
+        }),
+
+        new ExtractTextWebpackPlugin('style/common.css'),
+    ],
+}
+module.exports = config
+
+module.exports.plugins = (module.exports.plugins || []).concat([
+    // 构建之前，先删除dist目录下面的文件夹
+    new ClearWebpackPlugin(['dist']),
+])
+```
+
+上边说的注意的三个地方，配置这里再重复一下。
+
+publicPath:用来覆盖项目路径,生成该css文件的文件路径。
+use:指需要什么样的loader去编译文件,这里由于源文件是.css，所以选择css-loader。
+fallback:编译后用什么loader来提取css文件。这里使用style-loader。
+extract-text-webpack-plugin里边的参数用来设置css保存的文件位置和文件名。文件位置结合publicPath。
+
+# 额外
+
+[http://www.jqhtml.com/6393.html](http://www.jqhtml.com/6393.html)
+=======
+	]);
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs

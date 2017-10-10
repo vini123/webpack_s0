@@ -1,5 +1,6 @@
 require('./c')
 require('./d')
+require('./style/common.css')
 
 console.log('this is cd.js . that require c.js and d.js.');
 

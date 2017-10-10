@@ -1,5 +1,6 @@
 require('./a')
 require('./b')
+require('./style/common.css')
 
 console.log('this is ab.js, i require a.js and b.js');
 
