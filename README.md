@@ -5,19 +5,30 @@
 
 [http://www.cnblogs.com/penghuwan/p/6665140.html](http://www.cnblogs.com/penghuwan/p/6665140.html)
 
+# 使用
+
+```
+git clone xxx
+
+cd webpackstudy
+
+npm install
+
+npm start
+```
+
 # 基本的webpack文件
 
  1. `webpack.config.js` 配置文件。这个很有用，webpack默认会调用这个。如果你改名或移动位置（默认根目录下）,需要指定配置文件。
 
  2. `package.json` npm配置文件。通常使用 `npm init`初始化完成。在该配置文件中，可以配置一些webpack相关的命令。比如启动webpack或上边说到的指定配置文件。eg：
- ```
- ……
+
+ ``` javascript
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack"
   },
-……
  ```
 3. 编译前文件。js，css，less，图片等等。
 
@@ -51,37 +62,39 @@ npm install --save-dev html-webpack-plugin
 **webpack.config.js**
 
 ```javascript
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
 
 const config = {
-	entry: {
-    	ab:__dirname + '/src/ab.js',
-    	cd:__dirname + '/src/cd.js',
-	},
-	output:{
-    	path: path.resolve(__dirname, 'dist'),
-    	filename: '[name]-[hash].bundle.js'
-	},
-	module:{
-    	rules:[
-    		{test:/\.txt$/, use:'raw-loader'}
-    	]
-	},
-	plugins:[
-    	new HtmlWebpackPlugin({  
-                              filename:'ab.html',
-    		                      template:'./index.html',
-    		                      chunks:['ab']}),
+    entry: {
+        ab: __dirname + '/src/ab.js',
+        cd: __dirname + '/src/cd.js',
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name]-[hash].bundle.js',
+    },
+    module: {
+        rules: [
+            {test: /\.txt$/, use: 'raw-loader'},
+        ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'ab.html',
+            template: './index.html',
+            chunks: ['ab'],
+        }),
 
-    	new HtmlWebpackPlugin({
-                          		filename:'cd.html',
-                          		template:'./index.html',
-                          		chunks:['cd']})
-	]
+        new HtmlWebpackPlugin({
+            filename: 'cd.html',
+            template: './index.html',
+            chunks: ['cd'],
+        }),
+    ],
 }
-module.exports = config;
+module.exports = config
 ```
 
 > entry 入口可以是一个字符串（唯一入口）对象。也可以是一个object对象。当然object对象如果只有一条配置。也是唯一一个入口。  
@@ -122,43 +135,45 @@ exclude：['xx', 'xxx'] //排除不删除的目录或文件
 最后配置如下：
 
 ```javascript
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ClearWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ClearWebpackPlugin = require('clean-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
 
 const config = {
-	entry: {
-    	ab:__dirname + '/src/ab.js',
-    	cd:__dirname + '/src/cd.js',
-	},
-	output:{
-    	path: path.resolve(__dirname, 'dist'),
-    	filename: '[name]-[hash].bundle.js'
-	},
-	module:{
-    	rules:[
-    		{test:/\.txt$/, use:'raw-loader'}
-    	]
-	},
-	plugins:[
-    	new HtmlWebpackPlugin({  
-                              filename:'ab.html',
-    		                      template:'./index.html',
-    		                      chunks:['ab']}),
+    entry: {
+        ab: __dirname + '/src/ab.js',
+        cd: __dirname + '/src/cd.js',
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name]-[hash].bundle.js',
+    },
+    module: {
+        rules: [
+            {test: /\.txt$/, use: 'raw-loader'},
+        ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'ab.html',
+            template: './index.html',
+            chunks: ['ab'],
+        }),
 
-    	new HtmlWebpackPlugin({
-                          		filename:'cd.html',
-                          		template:'./index.html',
-                          		chunks:['cd']})
-	]
+        new HtmlWebpackPlugin({
+            filename: 'cd.html',
+            template: './index.html',
+            chunks: ['cd'],
+        }),
+    ],
 }
-module.exports = config;
+module.exports = config
 
 module.exports.plugins = (module.exports.plugins || []).concat([
-		// 构建之前，先删除dist目录下面的文件夹
-		new ClearWebpackPlugin(['dist'])
-	]);
+    // 构建之前，先删除dist目录下面的文件夹
+    new ClearWebpackPlugin(['dist']),
+])
 
 ```
 
@@ -212,6 +227,7 @@ npm install --save-dev style-loader
 修改 **webpack.config.js**
 
 先引入 **extract-text-webpack-plugin**
+
 ``` javascript
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 ```
@@ -285,10 +301,6 @@ extract-text-webpack-plugin里边的参数用来设置css保存的文件位置�
 # 额外
 
 [http://www.jqhtml.com/6393.html](http://www.jqhtml.com/6393.html)
-=======
-	]);
-
-```
 
 
 
